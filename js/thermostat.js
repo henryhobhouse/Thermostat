@@ -11,13 +11,13 @@ function Thermostat() {
 };
 
 Thermostat.prototype.uptemp = function() {
-  this._check_temp();
+  this._check_temp_high();
   this.current_temperature++;
   this.check_energy_usage();
 };
 
 Thermostat.prototype.downtemp = function() {
-  this._check_temp();
+  this._check_temp_low();
   this.current_temperature--;
   this.check_energy_usage();
 };
@@ -25,6 +25,7 @@ Thermostat.prototype.downtemp = function() {
 Thermostat.prototype.saver_switch = function() {
   this.powersaver === true ? this.powersaver = false : this.powersaver = true;
   this._check_max();
+  this.current_temperature > this.max ? this.current_temperature = this.max : null;
 }
 
 Thermostat.prototype.temp_reset = function() {
@@ -42,9 +43,12 @@ Thermostat.prototype.check_energy_usage = function() {
 
 // PRIVATE
 
-Thermostat.prototype._check_temp = function() {
-  this._check_max();
+Thermostat.prototype._check_temp_low = function() {
   if (this.current_temperature <= this.MIN) throw "Temp is too low";
+}
+
+Thermostat.prototype._check_temp_high = function() {
+  this._check_max();
   if (this.current_temperature >= this.max) throw "Temp is too high";
 }
 
