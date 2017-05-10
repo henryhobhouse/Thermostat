@@ -6,26 +6,24 @@
  <title>Thermostat_Challenge</title>
   <meta name="description" content="Thermostat in JS">
   <meta name="author" content="Makers">
-
-
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript" src="js/thermostat.js"></script>
 </head>
 
 <body>
-  <script type="text/javascript" src="js/jquery.js"></script>
-  <script type="text/javascript" src="js/thermostat.js"></script>
-  <script type="text/javascript" src="js/features.js"></script>
   <div>
     <ul>
-      <li> current_temperature
-      <li> MIN temp
-      <li> Max temp
-      <li> Powersaver status
+      <li> <p id="current"></p>
+      <li> <p id="min"></p>
+      <li> <p id="max"></p>
+      <li> <p id="power_status"></p>
     </ul>
   </div>
   <div>
-    <button type="button" id="uptemp"> temperature up</button>
-    <button type="button" id="downtemp">temperature down</button>
+    <button type="button" id="increasetemp">Increase Temp</button>
+    <button type="button" id="decreasetemp">Decrease Temp</button>
   </div>
+
   <div>
     <br><br>
     <button type="button" id="temp_reset"> Reset temperature</button>
@@ -37,5 +35,6 @@
       <input type="radio" name="power_saver_mode" value="off" id="power_saver_on" > OFF<br>
     </form>
   </div>
+  <script type="text/javascript" src="js/features.js"></script>
 </body>
 </html>
