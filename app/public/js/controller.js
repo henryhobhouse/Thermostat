@@ -21,6 +21,11 @@ $("#power_saver").change(function() {
   update_temp()
 });
 
+$.get("http://openweathermap.org/data/2.5/weather?q=London,uk&appid=e1340fbac55b5c417540384602f10ea8", function(weather_data) {
+  console.log(weather_data.main.temp)
+  ("#weather").html(weather_data.main.temp);
+});
+
 update_temp()
 update_max()
 $("#max").text( "MIN temp: " + thermostat.MIN );
