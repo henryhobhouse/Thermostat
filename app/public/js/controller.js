@@ -1,3 +1,4 @@
+var thermostat = new Thermostat();
 
 $("#increasetemp").click(function() {
   thermostat.uptemp();
@@ -21,10 +22,8 @@ $("#power_saver").change(function() {
   update_temp()
 });
 
-$.getJSON("http://openweathermap.org/data/2.5/weather?q=London&APPID=e1340fbac55b5c417540384602f10ea8", function(weather_data) {
-  console.log(weather_data.main.temp)
-  thermostat.temp_save(weather_data)
-  ("#weather").text(weather_data.main.temp);
+$.getJSON("http://api.openweathermap.org/data/2.5/weather?id=2643743&appid=118b160902d01096293407ce94a46406", function(weather_data) {
+  $("#weather").text("Outside Weather is: " + (weather_data.main.temp - 273.15).toFixed(2) + "°C");
 });
 
 update_temp()
