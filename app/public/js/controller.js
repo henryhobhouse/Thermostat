@@ -29,7 +29,7 @@ $("#power_status").text( "Power Saver Status: " + thermostat.powersaver );
 
 function update_temp() {
   $("#current").text( "current_temperature: " + thermostat.current_temperature );
-  $("#body").attr('class', thermostat.energy_usage );
+  $("body").attr('class', thermostat.energy_usage );
 };
 
 function update_max() {
