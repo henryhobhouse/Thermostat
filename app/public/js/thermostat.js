@@ -28,6 +28,10 @@ Thermostat.prototype.saver_switch = function() {
   this.current_temperature > this.max ? this.current_temperature = this.max : null;
 }
 
+Thermostat.prototype.temp_save = function(data) {
+  this.temp = data
+} 
+
 Thermostat.prototype.temp_reset = function() {
   this.current_temperature = this.DEFAULT_TEMP;
   this.check_energy_usage();
