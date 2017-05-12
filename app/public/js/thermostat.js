@@ -1,15 +1,32 @@
-function Thermostat(name = "test", temp = 20, powersave = true) {
+function Thermostat(name = "test") {
   this.name = name;
-  this.powersaver = powersave;
-  this.current_temperature = temp;
+  this.powersaver = true
+  this.current_temperature = 20
+  this._initialize();
   this.MIN = 10;
   this.MAX_SAVER_ON = 25;
   this.MAX_SAVER_OFF = 32;
   this.DEFAULT_TEMP = 20;
   this.check_energy_usage();
   this._check_max();
-  // this.initialize();
 };
+
+Thermostat.prototype.save_settings = function() {
+  var formData = {
+    temp:this.current_temperature,
+    power:this.powersaver,
+    name:this.name,
+    location:"London"
+  }
+  $.ajax({
+    type: 'POST',
+    url: '/save',
+    data: JSON.stringify(formData),
+    success: function(formData) { alert('data: ' + formData); },
+    contentType: "application/json",
+    dataType: 'json'
+  });
+}
 
 Thermostat.prototype.uptemp = function() {
   this._check_temp_high();
@@ -62,18 +79,9 @@ Thermostat.prototype._check_max = function() {
 };
 
 Thermostat.prototype._initialize = function() {
-  $.ajax({
-    type: 'GET',
-    url: '/new_initialization',
-    data: { get_param: 'value' },
-    success: function(data) {
-      console.log(data)
-      // console.log(data.name)
-      // if data.name != nil {
-      //   this.name = data.name;
-      //   this.powersaver = data.powersave;
-      //   this.current_temperature = data.temp;
-      // };
-    },
+  $.getJSON('/new_initialization', { get_param: 'value' }, function(data) {
+    this.powersaver = data.powersave;
+    this.current_temperature = data.temp;
+    debugger;
   });
 }

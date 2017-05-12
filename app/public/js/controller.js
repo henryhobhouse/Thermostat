@@ -37,26 +37,9 @@ $(document).ready(function() {
 function update_temp() {
   $("#current").text( "current_temperature: " + thermostat.current_temperature );
   $("body").attr('class', thermostat.energy_usage );
-  save_settings();
+  thermostat.save_settings();
 }
 
 function update_max() {
   $("#min").text( "MAX temp: " + thermostat.max );
-}
-
-function save_settings() {
-  var formData = {
-    temp:thermostat.current_temperature,
-    power:thermostat.powersaver,
-    name:thermostat.name,
-    location:"London"
-  }
-  $.ajax({
-    type: 'POST',
-    url: '/save',
-    data: JSON.stringify(formData),
-    success: function(formData) { alert('data: ' + formData); },
-    contentType: "application/json",
-    dataType: 'json'
-  });
 }
