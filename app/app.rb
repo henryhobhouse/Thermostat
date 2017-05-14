@@ -6,6 +6,8 @@ require 'json'
 
 # Controller for bookmark app
 class Thermostat_control < Sinatra::Base
+  DEFAULT_TEMP = 20
+  DEFAULT_POWERSAVE = true
 
   get '/' do
     erb :index
@@ -21,10 +23,10 @@ class Thermostat_control < Sinatra::Base
   end
 
   get '/new_initialization' do
-    name = Settings.last[:name] || 'test'
-    location = Settings.last[:location] || 'London'
-    temp_status = Settings.last[:temp] || 20
-    power_save_status = Settings.last[:powersaver] || true
+    name = (Settings.last[:name] ||= 'test')
+    location = (Settings.last[:location] ||= 'London')
+    temp_status = (Settings.last[:temp] ||= DEFAULT_TEMP)
+    power_save_status = (Settings.last[:powersaver] ||= DEFAULT_POWERSAVE)
     content_type :json
     { :name => name, :location => location, :temp => temp_status, :powersaver => power_save_status }.to_json
   end
