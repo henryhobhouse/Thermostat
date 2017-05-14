@@ -1,32 +1,16 @@
-function Thermostat(name = "test") {
+function Thermostat(name, power_status = true, temp_status = 20) {
   this.name = name;
-  this.powersaver = true
-  this.current_temperature = 20
-  this._initialize();
+  this.powersaver = power_status;
+  this.current_temperature = temp_status;
   this.MIN = 10;
   this.MAX_SAVER_ON = 25;
   this.MAX_SAVER_OFF = 32;
   this.DEFAULT_TEMP = 20;
+  this.LOW_USAGE_TEMP = 18;
+  this.HIGH_USAGE_TEMP = 25;
   this.check_energy_usage();
   this._check_max();
 };
-
-Thermostat.prototype.save_settings = function() {
-  var formData = {
-    temp:this.current_temperature,
-    power:this.powersaver,
-    name:this.name,
-    location:"London"
-  }
-  $.ajax({
-    type: 'POST',
-    url: '/save',
-    data: JSON.stringify(formData),
-    success: function(formData) { alert('data: ' + formData); },
-    contentType: "application/json",
-    dataType: 'json'
-  });
-}
 
 Thermostat.prototype.uptemp = function() {
   this._check_temp_high();
@@ -52,11 +36,15 @@ Thermostat.prototype.temp_reset = function() {
 };
 
 Thermostat.prototype.check_energy_usage = function() {
-  if (this.current_temperature < 18) {this.energy_usage = "low_usage"};
-  if (this.current_temperature >= 18 && this.current_temperature < 25) {
+  if (this.current_temperature < this.LOW_USAGE_TEMP) {
+    this.energy_usage = "low_usage"
+  };
+  if (this.current_temperature >= this.LOW_USAGE_TEMP && this.current_temperature < this.HIGH_USAGE_TEMP) {
     this.energy_usage = "medium_usage"
   };
-  if (this.current_temperature >= 25) {this.energy_usage = "high_usage"};
+  if (this.current_temperature >= this.HIGH_USAGE_TEMP) {
+    this.energy_usage = "high_usage"
+  };
 };
 
 // PRIVATE
@@ -77,11 +65,3 @@ Thermostat.prototype._check_max = function() {
     this.max = this.MAX_SAVER_OFF;
   }
 };
-
-Thermostat.prototype._initialize = function() {
-  $.getJSON('/new_initialization', { get_param: 'value' }, function(data) {
-    this.powersaver = data.powersave;
-    this.current_temperature = data.temp;
-    debugger;
-  });
-}

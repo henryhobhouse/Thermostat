@@ -21,10 +21,10 @@ class Thermostat_control < Sinatra::Base
   end
 
   get '/new_initialization' do
-    name = Settings.first[:name]
-    location = Settings.first[:location]
-    temp_status = Settings.first[:temp]
-    power_save_status = Settings.first[:powersaver]
+    name = Settings.last[:name]
+    location = Settings.last[:location]
+    temp_status = Settings.last[:temp]
+    power_save_status = Settings.last[:powersaver]
     content_type :json
     { :name => name, :location => location, :temp => temp_status, :powersaver => power_save_status }.to_json
   end
