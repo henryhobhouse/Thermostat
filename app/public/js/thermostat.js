@@ -1,4 +1,4 @@
-function Thermostat(name, power_status = true, temp_status = 20) {
+function Thermostat(name='test', power_status = true, temp_status = 20) {
   this.name = name;
   this.powersaver = power_status;
   this.current_temperature = temp_status;
